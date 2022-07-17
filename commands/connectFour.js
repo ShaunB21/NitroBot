@@ -1,5 +1,4 @@
-const { SlashCommandBuilder, channelMention } = require('@discordjs/builders');
-const { Message, Channel } = require('discord.js');
+const { MessageActionRow, MessageButton } = require('discord.js');
 
 var board = [
     [':white_circle:', ':white_circle:', ':white_circle:', ':white_circle:', ':white_circle:', ':white_circle:', ':white_circle:', ':white_circle:'],
@@ -10,29 +9,56 @@ var board = [
     [':white_circle:', ':white_circle:', ':white_circle:', ':white_circle:', ':white_circle:', ':white_circle:', ':white_circle:', ':white_circle:']
 
 ];
+var end = false;
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('connectfour')
-        .setDescription('Play connect four'),
-    async execute(interaction) {
-        const message = await interaction.reply({
-            content: ':one::two::three::four::five::six::seven::eight:',
-            fetchReply: true
-        });
-        printBoard(message);
-        message.react('1️⃣');
-        message.react('2️⃣');
-        message.react('3️⃣');
-        message.react('4️⃣');
-        message.react('5️⃣');
-        message.react('6️⃣');
-        message.react('7️⃣');
-        message.react('8️⃣');
+    name: 'connectfour',
+    description: "Connect four game",
+    async execute(message, args) {
+        const row1 = new MessageActionRow()
+            .addComponents(
+                new MessageButton()
+                .setCustomId('one')
+                .setLabel('1')
+                .setStyle('PRIMARY'),
+                new MessageButton()
+                .setCustomId('two')
+                .setLabel('2')
+                .setStyle('PRIMARY'),
+                new MessageButton()
+                .setCustomId('three')
+                .setLabel('3')
+                .setStyle('PRIMARY'),
+                new MessageButton()
+                .setCustomId('four')
+                .setLabel('4')
+                .setStyle('PRIMARY'),
+            );
+        const row2 = new MessageActionRow()
+            .addComponents(
+                new MessageButton()
+                .setCustomId('five')
+                .setLabel('5')
+                .setStyle('PRIMARY'),
+                new MessageButton()
+                .setCustomId('six')
+                .setLabel('6')
+                .setStyle('PRIMARY'),
+                new MessageButton()
+                .setCustomId('seven')
+                .setLabel('7')
+                .setStyle('PRIMARY'),
+                new MessageButton()
+                .setCustomId('eight')
+                .setLabel('8')
+                .setStyle('PRIMARY'),
+            );
+        const boardMessage = await message.channel.send('Loading...', { components: [row1, row2] });
+        printBoard(boardMessage);
     }
 };
 
-async function printBoard(message) {
+async function printBoard(boardMessage) {
     var boardString = '';
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[i].length; j++) {
@@ -40,6 +66,6 @@ async function printBoard(message) {
         }
         boardString = boardString + '\n'
     }
-    message.edit(':one::two::three::four::five::six::seven::eight:' + '\n' + boardString)
+    boardMessage.edit(':one::two::three::four::five::six::seven::eight:' + '\n' + boardString)
 
 }
