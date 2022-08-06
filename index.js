@@ -37,7 +37,6 @@ client.on('message', interaction => {
     const command = args.shift().toLowerCase();
 
     if (command === 'play') {
-
         client.commands.get('play').execute(interaction, args);
     }
     if (command === 'move') {
