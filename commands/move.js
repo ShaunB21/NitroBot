@@ -1,5 +1,4 @@
-const { boardArray } = require("../board");
-const board = require("../board");
+const config = require("../structures/config");
 module.exports = {
     name: 'move',
     description: "Connect four game",
@@ -7,14 +6,14 @@ module.exports = {
         const boardMessage = await interaction.channel.send('Loading...');
         column = args - 1;
         move = findMove(column);
-        board.boardArray[move][column] = ':purple_circle:';
-        printBoard(boardMessage, board.boardArray);
+        config.boardArray[move][column] = ':purple_circle:';
+        printBoard(boardMessage, config.boardArray);
     }
 };
 
 function findMove(column) {
     for (var i = 5; i > -1; i--) {
-        if (boardArray[i][column] == ':white_circle:') {
+        if (config.boardArray[i][column] == ':white_circle:') {
             move = i;
             return move;
         }

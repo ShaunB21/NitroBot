@@ -1,11 +1,11 @@
-const board = require("../board");
+const config = require("../structures/config");
 module.exports = {
-    name: 'play',
+    name: 'begin',
     description: "Connect four game",
     async execute(interaction, args) {
 
         const boardMessage = await interaction.channel.send('Loading...');
-        printBoard(boardMessage, board.boardArray);
+        printBoard(boardMessage, config.boardArray);
 
     }
 };
