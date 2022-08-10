@@ -56,7 +56,7 @@ client.on('message', interaction => {
     }
 
     if (command === 'move' & config.currentGame === true) {
-        client.commands.get('move').execute(interaction, args);
+        client.commands.get('move').execute(interaction, args, userId);
 
     } else if (command === 'move' & config.currentGame === false) {
         interaction.channel.send('No game in progress');

@@ -2,25 +2,38 @@ const config = require("../structures/config");
 module.exports = {
     name: 'move',
     description: "Connect four game",
-    async execute(interaction, args) {
-        const boardMessage = await interaction.channel.send('Loading...');
+    async execute(interaction, args, userId) {
         column = args - 1;
-        move = findMove(column);
-        config.boardArray[move][column] = ':purple_circle:';
-        printBoard(boardMessage, config.boardArray);
-    }
-};
 
-function findMove(column) {
-    for (var i = 5; i > -1; i--) {
-        if (config.boardArray[i][column] == ':white_circle:') {
-            move = i;
-            return move;
+        for (var i = 5; i > -1; i--) {
+            if (config.boardArray[i][column] == ':white_circle:') {
+                move = i;
+                break;
+            }
         }
+
+        if (config.turn % 2 == 0) {
+            if (userId == config.player2) {
+                config.boardArray[move][column] = ':blue_circle:';
+                config.turn = config.turn + 1;
+                printBoard(interaction, config.boardArray);
+            } else {
+                await interaction.channel.send('Not your turn');
+            }
+        } else {
+            if (userId == config.player1) {
+                config.boardArray[move][column] = ':purple_circle:';
+                config.turn = config.turn + 1;
+                printBoard(interaction, config.boardArray);
+            } else {
+                await interaction.channel.send('Not your turn');
+            }
+        }
+
     }
 };
 
-async function printBoard(boardMessage, boardArray) {
+async function printBoard(interaction, boardArray) {
     var boardString = '';
     for (var i = 0; i < boardArray.length; i++) {
         for (var j = 0; j < boardArray[i].length; j++) {
@@ -28,6 +41,6 @@ async function printBoard(boardMessage, boardArray) {
         }
         boardString = boardString + '\n'
     }
-    boardMessage.edit(':one::two::three::four::five::six::seven::eight:' + '\n' + boardString)
+    await interaction.channel.send(':one::two::three::four::five::six::seven::eight:' + '\n' + boardString)
 
 }

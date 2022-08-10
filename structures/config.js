@@ -17,5 +17,9 @@ module.exports = {
 
     started: false,
 
+    player1: '',
+
+    player2: '',
+
     turn: 1
 };

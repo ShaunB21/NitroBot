@@ -3,7 +3,8 @@ module.exports = {
     name: 'begin',
     description: "Connect four game",
     async execute(interaction, args) {
-
+        config.player1 = config.players[0];
+        config.player2 = config.players[1];
         const boardMessage = await interaction.channel.send('Loading...');
         printBoard(boardMessage, config.boardArray);
 
