@@ -34,7 +34,12 @@ client.on('message', interaction => {
     userId = user.id
     const args = interaction.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
-    client.commands.get(command).execute(interaction, args, userId);
+    try {
+        client.commands.get(command).execute(interaction, args, userId);
+    } catch (e) {
+        interaction.channel.send('Not a valid command');
+    }
+
 });
 
 client.login(process.env.TOKEN);
