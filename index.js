@@ -34,28 +34,7 @@ client.on('message', interaction => {
     userId = user.id
     const args = interaction.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
-
-    if (command === 'start') {
-        client.commands.get(command).execute(interaction, args);
-    }
-
-    if (command === 'join') {
-        client.commands.get('join').execute(interaction, args, userId);
-    }
-
-    if (command === 'begin') {
-        client.commands.get('begin').execute(interaction, args);
-    }
-
-    if (command === 'move') {
-        client.commands.get('move').execute(interaction, args, userId);
-
-    }
-
-    if (command === 'help') {
-        client.commands.get('help').execute(interaction, args)
-    }
-
+    client.commands.get(command).execute(interaction, args, userId);
 });
 
 client.login(process.env.TOKEN);

@@ -1,7 +1,7 @@
 module.exports = {
     name: 'help',
     description: "Connect four game",
-    async execute(interaction, args) {
+    async execute(interaction, args, userId) {
         interaction.channel.send('Commands:' +
             '\n' + 'n.start to start a game' +
             '\n' + 'n.join to join a game' +

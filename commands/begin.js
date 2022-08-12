@@ -2,7 +2,7 @@ const config = require("../structures/config");
 module.exports = {
     name: 'begin',
     description: "Connect four game",
-    async execute(interaction, args) {
+    async execute(interaction, args, userId) {
         try {
             if (config.ready == true) {
                 config.player1 = config.players[0];
