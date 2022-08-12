@@ -36,30 +36,24 @@ client.on('message', interaction => {
     const command = args.shift().toLowerCase();
 
     if (command === 'start') {
-        interaction.channel.send('Type "n.join" to join the game. Maximum 2 players');
-        config.started = true;
-        config.currentGame = false;
-        config.players = [];
-        config.ready = false;
-        client.commands.get('start').execute(interaction, args);
+        client.commands.get(command).execute(interaction, args);
     }
 
-    if (command === 'join' & config.started === true) {
+    if (command === 'join') {
         client.commands.get('join').execute(interaction, args, userId);
-    } else if (command === 'join' & config.started === false) {
-        interaction.channel.send('No game has been started. Type "n.start" to start a game');
     }
 
-    if (command === 'begin' & config.ready === true) {
-        config.currentGame = true;
+    if (command === 'begin') {
         client.commands.get('begin').execute(interaction, args);
     }
 
-    if (command === 'move' & config.currentGame === true) {
+    if (command === 'move') {
         client.commands.get('move').execute(interaction, args, userId);
 
-    } else if (command === 'move' & config.currentGame === false) {
-        interaction.channel.send('No game in progress');
+    }
+
+    if (command === 'help') {
+        client.commands.get('help').execute(interaction, args)
     }
 
 });
